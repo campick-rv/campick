@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAMPICK — RV무버 · 아웃트리거 전문</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #F2EDE4;
+  --black: #1A1A18;
+  --orange: #D4581A;
+  --orange-light: #E8722A;
+  --gray: #6B6560;
+  --gray-light: #B0A99E;
+  --border: #C8BFB0;
+  --white: #FDFAF5;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--cream);
+  color: var(--black);
+  min-height: 100vh;
+}
+
+/* GRAIN OVERLAY */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.4;
+}
+
+/* HEADER */
+.site-header {
+  background: var(--black);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  color: var(--cream);
+  letter-spacing: 4px;
+}
+
+.logo span {
+  color: var(--orange);
+}
+
+.header-tag {
+  font-size: 10px;
+  color: var(--gray-light);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* TAB NAV */
+.tab-nav {
+  background: var(--black);
+  border-top: 1px solid #333;
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 0 4px;
+}
+
+.tab-nav::-webkit-scrollbar { display: none; }
+
+.tab-btn {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: var(--gray-light);
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 12px 14px;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  position: relative;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+
+.tab-btn.active {
+  color: var(--orange);
+}
+
+.tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0; right: 0;
+  height: 2px;
+  background: var(--orange);
+}
+
+/* SECTIONS */
+.section { display: none; }
+.section.active { display: block; }
+
+/* WRAPPER */
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 24px 16px 60px;
+}
+
+/* ── 소개 페이지 ── */
+.hook-block {
+  background: var(--black);
+  border-radius: 4px;
+  padding: 32px 24px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hook-block::before {
+  content: 'CAMPICK';
+  position: absolute;
+  right: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 100px;
+  color: rgba(255,255,255,0.03);
+  letter-spacing: 8px;
+  pointer-events: none;
+}
+
+.hook-tag {
+  display: inline-block;
+  border: 1px solid var(--orange);
+  color: var(--orange);
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 2px;
+  margin-bottom: 20px;
+}
+
+.hook-text {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+.hook-text em {
+  color: var(--orange);
+  font-style: normal;
+}
+
+/* METRICS */
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.metric-box {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 14px 8px;
+  text-align: center;
+}
+
+.metric-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 1px;
+  color: var(--black);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.metric-lbl {
+  font-size: 10px;
+  color: var(--gray);
+  letter-spacing: 0.5px;
+}
+
+/* DASHBOARD CARDS */
+.dash-title {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 12px;
+  padding-left: 2px;
+}
+
+.dash-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.dash-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.15s;
+  position: relative;
+  overflow: hidden;
+}
+
+.dash-card:hover {
+  border-color: var(--orange);
+  transform: translateY(-1px);
+}
+
+.dash-card::after {
+  content: '→';
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  color: var(--orange);
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.dash-card:hover::after { opacity: 1; }
+
+.dash-card-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px;
+  color: var(--border);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.dash-card-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--black);
+  margin-bottom: 4px;
+}
+
+.dash-card-desc {
+  font-size: 12px;
+  color: var(--gray);
+  line-height: 1.5;
+}
+
+/* QUOTE */
+.quote-strip {
+  background: var(--orange);
+  border-radius: 4px;
+  padding: 16px 20px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.quote-mark {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 40px;
+  color: rgba(255,255,255,0.3);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.quote-text {
+  font-size: 13px;
+  color: var(--white);
+  line-height: 1.7;
+  font-weight: 500;
+}
+
+.quote-src {
+  font-size: 11px;
+  color: rgba(255,255,255,0.6);
+  margin-top: 4px;
+}
+
+/* ── 공통 섹션 스타일 ── */
+.sec-header {
+  margin-bottom: 20px;
+}
+
+.sec-label {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 6px;
+}
+
+.sec-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px;
+  letter-spacing: 2px;
+  color: var(--black);
+  line-height: 1.1;
+}
+
+.sec-sub {
+  font-size: 13px;
+  color: var(--gray);
+  margin-top: 6px;
+  line-height: 1.6;
+}
+
+/* CARD BASE */
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 18px;
+  margin-bottom: 10px;
+}
+
+.card-label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* PRODUCT HOOK */
+.prod-hook {
+  background: var(--black);
+  border-radius: 4px;
+  padding: 20px;
+  margin-bottom: 10px;
+}
+
+.prod-hook p {
+  font-size: 14px;
+  color: var(--cream);
+  line-height: 1.8;
+  font-weight: 400;
+}
+
+.prod-hook p strong {
+  color: var(--orange);
+}
+
+/* PROD TABS */
+.prod-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.prod-tab {
+  font-size: 12px;
+  padding: 5px 14px;
+  border-radius: 2px;
+  border: 1px solid var(--border);
+  background: transparent;
+  cursor: pointer;
+  color: var(--gray);
+  font-family: 'Noto Sans KR', sans-serif;
+  transition: all 0.15s;
+}
+
+.prod-tab.active {
+  background: var(--black);
+  color: var(--orange);
+  border-color: var(--black);
+}
+
+.prod-panel { display: none; }
+.prod-panel.active { display: block; }
+
+/* SPEC ROWS */
+.spec-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  gap: 12px;
+}
+
+.spec-row:last-child { border-bottom: none; }
+.spec-key { color: var(--gray); flex-shrink: 0; }
+.spec-val { font-weight: 600; text-align: right; }
+
+/* BADGES */
+.badge {
+  display: inline-block;
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 2px;
+  margin-left: 5px;
+  font-weight: 500;
+}
+
+.badge-orange { background: #F5E6DC; color: var(--orange); }
+.badge-green { background: #DFF0E8; color: #1A6B45; }
+.badge-black { background: var(--black); color: var(--cream); }
+
+/* CHECKLIST */
+.checklist { list-style: none; }
+.checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  color: #444;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+  line-height: 1.6;
+}
+.checklist li:last-child { border-bottom: none; }
+
+.ci {
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  font-weight: 700;
+}
+
+.ci-ok { background: #DFF0E8; color: #1A6B45; }
+.ci-warn { background: #FDF0DC; color: #8A5200; }
+.ci-info { background: #E8F0FA; color: #1A4A8A; }
+
+/* STEP */
+.step-row {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.step-row:last-child { border-bottom: none; }
+
+.step-num {
+  width: 28px;
+  height: 28px;
+  background: var(--black);
+  color: var(--orange);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 2px;
+}
+
+.step-content h4 { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+.step-content p { font-size: 13px; color: var(--gray); line-height: 1.6; }
+
+/* NOTICE */
+.notice {
+  background: #FDF5E0;
+  border: 1px solid #E8D48A;
+  border-left: 3px solid #C8A800;
+  border-radius: 2px;
+  padding: 12px 14px;
+  margin-top: 10px;
+}
+.notice p { font-size: 12px; color: #7A5C00; line-height: 1.7; }
+
+/* HIGHLIGHT BOX */
+.hl-box {
+  background: var(--black);
+  border-radius: 4px;
+  padding: 14px 16px;
+  margin: 10px 0;
+}
+.hl-box p { font-size: 13px; color: var(--cream); line-height: 1.7; }
+.hl-box p strong { color: var(--orange); }
+
+/* WARNING BOX */
+.warn-box {
+  border: 1px solid var(--orange);
+  border-left: 3px solid var(--orange);
+  border-radius: 2px;
+  padding: 12px 14px;
+  margin: 10px 0;
+  background: #FDF5F0;
+}
+.warn-box-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 6px;
+}
+.warn-box p { font-size: 13px; color: #6B3010; line-height: 1.7; }
+
+/* BT STEPS */
+.bt-step {
+  display: flex;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  align-items: flex-start;
+}
+.bt-step:last-child { border-bottom: none; }
+
+.bt-num {
+  width: 32px;
+  height: 32px;
+  background: var(--orange);
+  color: var(--white);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 2px;
+}
+
+.bt-content h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.bt-content p { font-size: 13px; color: var(--gray); line-height: 1.6; }
+
+.bt-highlight {
+  display: inline-block;
+  background: var(--black);
+  color: var(--orange);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 2px;
+  margin-top: 6px;
+  letter-spacing: 1px;
+}
+
+/* CONTACT */
+.contact-hero {
+  background: var(--black);
+  border-radius: 4px;
+  padding: 28px 20px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.contact-phone {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 42px;
+  letter-spacing: 4px;
+  color: var(--orange);
+  margin: 12px 0 6px;
+}
+
+.contact-hero p {
+  font-size: 13px;
+  color: var(--gray-light);
+  line-height: 1.7;
+}
+
+/* DIVIDER */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 16px 0;
+}
+.divider-line { flex: 1; height: 1px; background: var(--border); }
+.divider-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gray-light); }
+
+/* USAGE PLACEHOLDER */
+.placeholder {
+  background: var(--white);
+  border: 2px dashed var(--border);
+  border-radius: 4px;
+  padding: 40px 20px;
+  text-align: center;
+}
+.placeholder p { font-size: 13px; color: var(--gray-light); }
+
+/* BLOG LINK */
+.blog-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 16px 18px;
+  text-decoration: none;
+  color: var(--black);
+  transition: border-color 0.15s;
+}
+.blog-link:hover { border-color: var(--orange); }
+.blog-link-left p { font-size: 13px; color: var(--gray); margin-top: 2px; }
+.blog-link-left strong { font-size: 14px; font-weight: 700; }
+.blog-link-arrow { font-size: 20px; color: var(--orange); }
+
+/* SUB DIVIDER */
+.sub-div {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gray);
+  padding: 14px 0 8px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 10px;
+}
+
+@media (max-width: 400px) {
+  .metrics { grid-template-columns: repeat(2, 1fr); }
+  .dash-grid { grid-template-columns: 1fr; }
+  .hook-text { font-size: 18px; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo">CAMP<span>I</span>CK</div>
+  <div class="header-tag">RV무버 · 아웃트리거 전문</div>
+</header>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" onclick="show('intro',this)">소개</button>
+  <button class="tab-btn" onclick="show('products',this)">제품 스펙</button>
+  <button class="tab-btn" onclick="show('work',this)">작업 안내</button>
+  <button class="tab-btn" onclick="show('bluetooth',this)">블루투스 연결</button>
+  <button class="tab-btn" onclick="show('guide',this)">사용 가이드</button>
+  <button class="tab-btn" onclick="show('faq',this)">자주 묻는 질문</button>
+  <button class="tab-btn" onclick="show('contact',this)">상담 문의</button>
+</nav>
+
+<!-- ══════════════════════════════ 소개 ══════════════════════════════ -->
+<div id="intro" class="section active">
+  <div class="wrap">
+
+    <div class="hook-block">
+      <div class="hook-tag">CAMPICK</div>
+      <div class="hook-text">
+        견인차에서 분리하는 순간부터<br>
+        다시 체결하는 순간까지.<br>
+        <em>그 사이가 진짜 캠핑입니다.</em>
+      </div>
+    </div>
+
+    <div class="metrics">
+      <div class="metric-box">
+        <div class="metric-num">전국</div>
+        <div class="metric-lbl">출장 설치</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-num">당일</div>
+        <div class="metric-lbl">완료 원칙</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-num">1년</div>
+        <div class="metric-lbl">무상 A/S</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-num">국내</div>
+        <div class="metric-lbl">제작 · A/S</div>
+      </div>
+    </div>
+
+    <div class="dash-title">서비스 안내</div>
+    <div class="dash-grid">
+      <div class="dash-card" onclick="show('products', document.querySelectorAll('.tab-btn')[1])">
+        <div class="dash-card-num">01</div>
+        <div class="dash-card-title">제품 스펙</div>
+        <div class="dash-card-desc">내 차량에 맞는 무버 · 아웃트리거 확인</div>
+      </div>
+      <div class="dash-card" onclick="show('work', document.querySelectorAll('.tab-btn')[2])">
+        <div class="dash-card-num">02</div>
+        <div class="dash-card-title">작업 안내</div>
+        <div class="dash-card-desc">설치 전 준비사항과 진행 방식</div>
+      </div>
+      <div class="dash-card" onclick="show('bluetooth', document.querySelectorAll('.tab-btn')[3])">
+        <div class="dash-card-num">03</div>
+        <div class="dash-card-title">블루투스 연결</div>
+        <div class="dash-card-desc">처음 연결도 따라만 하면 됩니다</div>
+      </div>
+      <div class="dash-card" onclick="show('guide', document.querySelectorAll('.tab-btn')[4])">
+        <div class="dash-card-num">04</div>
+        <div class="dash-card-title">사용 가이드</div>
+        <div class="dash-card-desc">캠핑장 도착부터 철수까지</div>
+      </div>
+      <div class="dash-card" onclick="show('faq', document.querySelectorAll('.tab-btn')[5])">
+        <div class="dash-card-num">05</div>
+        <div class="dash-card-title">자주 묻는 질문</div>
+        <div class="dash-card-desc">많이 물어보는 것들 모아봤습니다</div>
+      </div>
+      <div class="dash-card" onclick="show('contact', document.querySelectorAll('.tab-btn')[6])">
+        <div class="dash-card-num">06</div>
+        <div class="dash-card-title">상담 문의</div>
+        <div class="dash-card-desc">지금 바로 연락하기</div>
+      </div>
+    </div>
+
+    <div class="quote-strip">
+      <div class="quote-mark">"</div>
+      <div>
+        <div class="quote-text">다시 어디 가져갈 필요가 없는 게 좋네요.</div>
+        <div class="quote-src">— 전남 영광 작업장 고객님</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════ 제품 스펙 ══════════════════════════════ -->
+<div id="products" class="section">
+  <div class="wrap">
+
+    <div class="sec-header">
+      <div class="sec-label">Products</div>
+      <div class="sec-title">제품 스펙</div>
+    </div>
+
+    <!-- RVMover -->
+    <div class="prod-hook">
+      <p>
+        <strong>무버 없이 간 첫 캠핑, 기억하시나요?</strong><br>
+        이제 도착하면 쉬세요.<br>
+        주차는 캠픽이 해결합니다.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="card-label">RVMover — 전동 무버 (RV-9000AT 시리즈)</div>
+      <div class="prod-tabs">
+        <button class="prod-tab active" onclick="showProd('m-basic',this,'m')">기본형</button>
+        <button class="prod-tab" onclick="showProd('m-fast',this,'m')">FAST</button>
+        <button class="prod-tab" onclick="showProd('m-awd',this,'m')">AWD</button>
+      </div>
+
+      <div id="m-basic" class="prod-panel active">
+        <div class="spec-row"><span class="spec-key">모델명</span><span class="spec-val">RV-9000AT</span></div>
+        <div class="spec-row"><span class="spec-key">구성</span><span class="spec-val">단축(1축) 기본 모델</span></div>
+        <div class="spec-row"><span class="spec-key">평지 견인력</span><span class="spec-val">최대 2.6톤</span></div>
+        <div class="spec-row"><span class="spec-key">제어</span><span class="spec-val">스마트폰 앱 + 무선 리모컨</span></div>
+        <div class="spec-row"><span class="spec-key">전원</span><span class="spec-val">DC 12V</span></div>
+        <div class="spec-row"><span class="spec-key">제조 / A/S</span><span class="spec-val">국내 / 국내</span></div>
+      </div>
+      <div id="m-fast" class="prod-panel">
+        <div class="spec-row"><span class="spec-key">모델명</span><span class="spec-val">RV-9000AT FAST</span></div>
+        <div class="spec-row"><span class="spec-key">구성</span><span class="spec-val">단축(1축) 고속 모델</span></div>
+        <div class="spec-row"><span class="spec-key">속도</span><span class="spec-val">기본형 대비 <span class="badge badge-orange">+50% 빠름</span></span></div>
+        <div class="spec-row"><span class="spec-key">평지 견인력</span><span class="spec-val">1톤 후반 ~ 2톤 초반</span></div>
+        <div class="spec-row"><span class="spec-key">권장 차량 중량</span><span class="spec-val">짐 탑재 기준 1톤 초중반 이하</span></div>
+        <div class="spec-row"><span class="spec-key">제어</span><span class="spec-val">스마트폰 앱 + 무선 리모컨</span></div>
+        <div class="spec-row"><span class="spec-key">전원</span><span class="spec-val">DC 12V</span></div>
+        <div class="spec-row"><span class="spec-key">제조 / A/S</span><span class="spec-val">국내 / 국내</span></div>
+      </div>
+      <div id="m-awd" class="prod-panel">
+        <div class="spec-row"><span class="spec-key">모델명</span><span class="spec-val">RV-9000AT AWD</span></div>
+        <div class="spec-row"><span class="spec-key">구성</span><span class="spec-val">투축(2축) 전용 모델</span></div>
+        <div class="spec-row"><span class="spec-key">구동 방식</span><span class="spec-val">기본형 × 2 <span class="badge badge-black">2축 동시 구동</span></span></div>
+        <div class="spec-row"><span class="spec-key">평지 견인력</span><span class="spec-val">기본형 × 2</span></div>
+        <div class="spec-row"><span class="spec-key">제어</span><span class="spec-val">스마트폰 앱 + 무선 리모컨</span></div>
+        <div class="spec-row"><span class="spec-key">전원</span><span class="spec-val">DC 12V</span></div>
+        <div class="spec-row"><span class="spec-key">제조 / A/S</span><span class="spec-val">국내 / 국내</span></div>
+      </div>
+    </div>
+
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-label">RV-SAL</div>
+      <div class="divider-line"></div>
+    </div>
+
+    <!-- RV-SAL -->
+    <div class="prod-hook">
+      <p>
+        카라반 주변을 돌면서 아웃트리거를 내리고 있나요?<br>
+        <strong>RV-SAL이 균등하게 하중을 분산하고<br>정확한 수평을 잡아드립니다.</strong>
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="card-label">RV-SAL — 전동 아웃트리거</div>
+      <div class="prod-tabs">
+        <button class="prod-tab active" onclick="showProd('s-basic',this,'s')">베이직</button>
+        <button class="prod-tab" onclick="showProd('s-premium',this,'s')">프리미엄</button>
+      </div>
+
+      <div id="s-basic" class="prod-panel active">
+        <div class="spec-row"><span class="spec-key">모델명</span><span class="spec-val">RV-SAL Basic</span></div>
+        <div class="spec-row"><span class="spec-key">구성</span><span class="spec-val">기존 아웃트리거 + 전동 모듈 장착</span></div>
+        <div class="spec-row"><span class="spec-key">포인트 수</span><span class="spec-val">4P <span class="badge badge-green">앞·뒤 수평</span></span></div>
+        <div class="spec-row"><span class="spec-key">수평 제어</span><span class="spec-val">자동 (기준 수평 설정)</span></div>
+        <div class="spec-row"><span class="spec-key">구배 모드</span><span class="spec-val">지원</span></div>
+        <div class="spec-row"><span class="spec-key">제어</span><span class="spec-val">스마트폰 앱 + 무선 리모컨</span></div>
+      </div>
+      <div id="s-premium" class="prod-panel">
+        <div class="spec-row"><span class="spec-key">모델명</span><span class="spec-val">RV-SAL Premium</span></div>
+        <div class="spec-row"><span class="spec-key">구성</span><span class="spec-val">베이직 + 1.5T 중앙잭 2개 (액슬 고정)</span></div>
+        <div class="spec-row"><span class="spec-key">포인트 수</span><span class="spec-val">6P <span class="badge badge-green">앞·뒤·좌·우 4방향</span></span></div>
+        <div class="spec-row"><span class="spec-key">중앙잭 지지력</span><span class="spec-val">1.5톤 × 2개</span></div>
+        <div class="spec-row"><span class="spec-key">적용 액슬</span><span class="spec-val">KNOTT · AL-KO 기준 <span class="badge badge-orange">타 액슬 확인 후 가능</span></span></div>
+        <div class="spec-row"><span class="spec-key">수평 제어</span><span class="spec-val">자동 (기준 수평 설정)</span></div>
+        <div class="spec-row"><span class="spec-key">구배 모드</span><span class="spec-val">지원</span></div>
+        <div class="spec-row"><span class="spec-key">업그레이드</span><span class="spec-val">베이직 → 프리미엄 가능</span></div>
+        <div class="spec-row"><span class="spec-key">제어</span><span class="spec-val">스마트폰 앱 + 무선 리모컨</span></div>
+      </div>
+    </div>
+
+    <div class="hl-box">
+      <p>RVMover + RV-SAL 동시 설치 시 — <strong>스마트폰 앱 또는 리모컨 하나</strong>로 두 제품을 동시 제어할 수 있습니다.</p>
+    </div>
+
+    <div class="notice">
+      <p>모든 스펙은 평지·짐 탑재 기준이며 노면·경사·차량 상태에 따라 성능 차이가 생길 수 있습니다. 차량 구조에 따라 추가 작업비가 발생할 수 있습니다.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════ 작업 안내 ══════════════════════════════ -->
+<div id="work" class="section">
+  <div class="wrap">
+
+    <div class="sec-header">
+      <div class="sec-label">Installation Guide</div>
+      <div class="sec-title">작업 안내</div>
+      <div class="sec-sub">설치 전 확인사항부터 진행 방식까지</div>
+    </div>
+
+    <div class="sub-div">작업 공간 조건</div>
+    <div class="card">
+      <ul class="checklist">
+        <li><div class="ci ci-ok">✓</div>주차칸 1기준 좌·우 포함 총 3칸 확보를 권장합니다.</li>
+        <li><div class="ci ci-warn">!</div>공간이 부족한 경우, 사진 확인 후 작업 가능 여부를 사전 안내드립니다.</li>
+        <li><div class="ci ci-warn">!</div>도로변, 경사로, 사람 밀집 지역은 안전상 설치가 불가합니다.</li>
+        <li><div class="ci ci-warn">!</div>유료 주차장 이용 시 발생하는 주차비는 고객 부담입니다.</li>
+        <li><div class="ci ci-warn">!</div>자갈·흙바닥 등 특수 노면은 사진 확인 후 진행 여부를 안내드립니다.</li>
+      </ul>
+    </div>
+
+    <div class="sub-div">미리 알려주시면 더 좋아요</div>
+    <div class="card">
+      <ul class="checklist">
+        <li><div class="ci ci-info">i</div>출장 전 하부 사진 공유 시 작업 준비에 도움이 됩니다. <span class="badge badge-green">선택</span></li>
+        <li><div class="ci ci-warn">!</div>일부 차량은 하부 또는 휠커버 커팅이 필요할 수 있으며 사전 안내 후 진행됩니다.</li>
+        <li><div class="ci ci-warn">!</div>비·눈 등 날씨에 따라 일정 조정 또는 실내 이동 후 작업이 진행될 수 있습니다.</li>
+      </ul>
+    </div>
+
+    <div class="sub-div">차량 구조 관련</div>
+    <div class="card">
+      <ul class="checklist">
+        <li><div class="ci ci-info">i</div>차량 하부 구조에 따라 장착 위치 및 방식이 달라질 수 있습니다.</li>
+        <li><div class="ci ci-warn">!</div>스페어타이어 거치대, 발판 등 간섭 시 철거 또는 위치 조정이 필요합니다.</li>
+        <li><div class="ci ci-warn">!</div>일부 차량은 브라켓 제작이 필요하며 추가 비용이 발생할 수 있습니다.</li>
+        <li><div class="ci ci-warn">!</div>형태에 따라 바디 하부 또는 휠커버 커팅이 필요할 수 있습니다.</li>
+        <li><div class="ci ci-warn">!</div>기존 무버가 장착된 차량은 탈거 후 신규 설치가 진행되며, 탈거 비용이 추가됩니다.</li>
+      </ul>
+    </div>
+
+    <div class="sub-div">A/S 안내</div>
+    <div class="card">
+      <ul class="checklist">
+        <li><div class="ci ci-ok">✓</div>시공 범위 내 제품은 제조사와 동일하게 <strong>1년 무상 A/S</strong>를 제공합니다 (고객 과실 제외).</li>
+        <li><div class="ci ci-warn">!</div>출장 A/S의 경우 출장비가 별도로 발생합니다.</li>
+      </ul>
+    </div>
+
+    <div class="sub-div">진행 방식</div>
+    <div class="card">
+      <div class="step-row"><div class="step-num">1</div><div class="step-content"><h4>상담 문의</h4><p>카라반 제조사·모델·연식, 희망 제품을 알려주세요. 전화 또는 카카오톡으로 문의 가능합니다.</p></div></div>
+      <div class="step-row"><div class="step-num">2</div><div class="step-content"><h4>차량 정보 확인</h4><p>설치 가능 여부와 추가 작업 발생 여부를 사전에 확인합니다. 하부 사진을 미리 보내주시면 더 빠릅니다.</p></div></div>
+      <div class="step-row"><div class="step-num">3</div><div class="step-content"><h4>일정 조율 · 견적 확정</h4><p>방문 날짜와 장소를 협의하고 최종 견적을 확정합니다. 전국 어디든 출장 가능합니다.</p></div></div>
+      <div class="step-row"><div class="step-num">4</div><div class="step-content"><h4>현장 방문 설치</h4><p>약속된 날짜에 직접 방문해 설치합니다. 고객님이 자리를 비우셔도 괜찮습니다. 당일 완료 원칙입니다.</p></div></div>
+      <div class="step-row"><div class="step-num">5</div><div class="step-content"><h4>시운전 · 인도</h4><p>실제 주차하시는 자리에서 작동 테스트 후 인도합니다.</p></div></div>
+    </div>
+
+    <div class="notice">
+      <p>제품 스펙은 평지 기준이며, 차량 하중·텅잭(전축하중)·노면 상태에 따라 결과가 달라질 수 있습니다.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════ 블루투스 연결 ══════════════════════════════ -->
+<div id="bluetooth" class="section">
+  <div class="wrap">
+
+    <div class="sec-header">
+      <div class="sec-label">Bluetooth Setup</div>
+      <div class="sec-title">블루투스 연결</div>
+      <div class="sec-sub">처음 연결도 순서대로 따라만 하면 됩니다</div>
+    </div>
+
+    <div class="warn-box">
+      <div class="warn-box-title">⚠ 연결 전 반드시 확인</div>
+      <p>위치 권한 허용 · Bluetooth Classic 체크 해제 · 비밀번호 123456<br>이 세 가지가 가장 많이 막히는 포인트입니다.</p>
+    </div>
+
+    <div class="sub-div">STEP 1 — 앱 설치</div>
+    <div class="card">
+      <div class="bt-step">
+        <div class="bt-num">1</div>
+        <div class="bt-content">
+          <h4>앱 다운로드</h4>
+          <p>안드로이드 Play스토어에서 <strong>rv리모컨</strong> 검색 후 <strong>RV 리모컨 (M+LAP)</strong> 설치</p>
+          <div class="bt-highlight">※ 애플 앱은 개발 중</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-div">STEP 2 — 앱 실행</div>
+    <div class="card">
+      <div class="bt-step">
+        <div class="bt-num">1</div>
+        <div class="bt-content">
+          <h4>앱 실행</h4>
+          <p>RV리모컨 앱을 실행합니다.</p>
+        </div>
+      </div>
+      <div class="bt-step">
+        <div class="bt-num">2</div>
+        <div class="bt-content">
+          <h4>위치 권한 허용</h4>
+          <p>휴대폰 위치 권한을 <strong>반드시 허용</strong>해야 합니다. 허용하지 않으면 블루투스 기기 검색이 되지 않습니다.</p>
+          <div class="bt-highlight">앱 사용 중에만 허용 선택</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-div">STEP 3 — 기기 연결</div>
+    <div class="card">
+      <div class="bt-step">
+        <div class="bt-num">1</div>
+        <div class="bt-content">
+          <h4>Bluetooth Classic 체크 해제</h4>
+          <p>화면 하단의 Bluetooth Classic 체크박스가 <strong>반드시 해제</strong>된 상태여야 합니다.</p>
+        </div>
+      </div>
+      <div class="bt-step">
+        <div class="bt-num">2</div>
+        <div class="bt-content">
+          <h4>자동연결 선택</h4>
+          <p>자동연결 옵션을 선택합니다.</p>
+        </div>
+      </div>
+      <div class="bt-step">
+        <div class="bt-num">3</div>
+        <div class="bt-content">
+          <h4>블루투스 기기 선택</h4>
+          <p>검색된 기기 목록에서 본인 차량 기기를 선택합니다.</p>
+          <div class="bt-highlight">예) RVMOVER-FSF253700</div>
+          <div class="bt-highlight" style="margin-top:4px;">예) RVSAL-ESPF250100</div>
+        </div>
+      </div>
+      <div class="bt-step">
+        <div class="bt-num">4</div>
+        <div class="bt-content">
+          <h4>비밀번호 입력</h4>
+          <p>블루투스 연결 요청 팝업에서 비밀번호를 입력합니다.</p>
+          <div class="bt-highlight">비밀번호: 123456</div>
+        </div>
+      </div>
+      <div class="bt-step">
+        <div class="bt-num">5</div>
+        <div class="bt-content">
+          <h4>연결 완료 확인</h4>
+          <p>화면에 <strong>Bonding complete</strong> 메시지가 표시되면 연결 완료입니다.</p>
+        </div>
+      </div>
+      <div class="bt-step">
+        <div class="bt-num">6</div>
+        <div class="bt-content">
+          <h4>새로고침</h4>
+          <p>새로고침 버튼을 눌러 연결 상태를 확정합니다.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-div">STEP 4 — 모델 설정</div>
+    <div class="card">
+      <div class="bt-step">
+        <div class="bt-num">1</div>
+        <div class="bt-content">
+          <h4>블루투스 등록 확인</h4>
+          <p>연결된 기기 이름 옆에 <strong>(Default)</strong> 표시 확인 후 해당 기기를 선택합니다.</p>
+        </div>
+      </div>
+      <div class="bt-step">
+        <div class="bt-num">2</div>
+        <div class="bt-content">
+          <h4>RVMover 모델 설정</h4>
+          <p>사용하는 모델을 선택합니다. RV-SAL만 사용하는 경우 <strong>None</strong> 선택.</p>
+          <div class="bt-highlight">RV-9000AT / RV-9000MT / None</div>
+        </div>
+      </div>
+      <div class="bt-step">
+        <div class="bt-num">3</div>
+        <div class="bt-content">
+          <h4>컨트롤 방식 선택</h4>
+          <p>조작 방식을 선택합니다.</p>
+          <div class="bt-highlight">양손조이스틱 / 한손조이스틱 / 방향버튼</div>
+        </div>
+      </div>
+      <div class="bt-step">
+        <div class="bt-num">4</div>
+        <div class="bt-content">
+          <h4>SAL 모델 설정</h4>
+          <p>사용하는 SAL 모델을 선택합니다. RVMover만 사용하는 경우 <strong>None</strong> 선택.</p>
+          <div class="bt-highlight">SAL-Basic / SAL-Premium / None</div>
+        </div>
+      </div>
+      <div class="bt-step">
+        <div class="bt-num">5</div>
+        <div class="bt-content">
+          <h4>설정 버튼 클릭</h4>
+          <p>모든 설정 완료 후 <strong>설정</strong> 버튼을 눌러 저장합니다.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="hl-box">
+      <p><strong>두 번째 연결부터는?</strong><br>자동연결 옵션을 설정해뒀다면 앱 실행 시 자동으로 연결됩니다.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════ 사용 가이드 ══════════════════════════════ -->
+<div id="guide" class="section">
+  <div class="wrap">
+    <div class="sec-header">
+      <div class="sec-label">User Guide</div>
+      <div class="sec-title">사용 가이드</div>
+      <div class="sec-sub">캠핑장 도착부터 철수까지</div>
+    </div>
+    <div class="placeholder">
+      <p>사용 가이드 내용 준비 중입니다.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ FAQ ══════════════════════════════ -->
+<div id="faq" class="section">
+  <div class="wrap">
+    <div class="sec-header">
+      <div class="sec-label">FAQ</div>
+      <div class="sec-title">자주 묻는 질문</div>
+    </div>
+    <div class="placeholder">
+      <p>자주 묻는 질문 내용 준비 중입니다.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ 상담 문의 ══════════════════════════════ -->
+<div id="contact" class="section">
+  <div class="wrap">
+
+    <div class="sec-header">
+      <div class="sec-label">Contact</div>
+      <div class="sec-title">상담 문의</div>
+      <div class="sec-sub">필요하다고 느끼신 지금이 가장 좋은 타이밍입니다.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">문의 전 준비하면 좋은 정보</div>
+      <ul class="checklist">
+        <li><div class="ci ci-ok">✓</div>카라반 제조사 및 모델명</li>
+        <li><div class="ci ci-ok">✓</div>연식 및 액슬 구성 — 단축(1축) / 투축(2축) 여부</li>
+        <li><div class="ci ci-ok">✓</div>희망 설치 제품 (무버 / 아웃트리거 / 둘 다)</li>
+        <li><div class="ci ci-ok">✓</div>설치 희망 지역 및 날짜</li>
+        <li><div class="ci ci-info">i</div>차량 하부 사진 (선택 — 보내주시면 사전 검토 가능합니다)</li>
+      </ul>
+    </div>
+
+    <div class="contact-hero">
+      <div class="hook-tag" style="margin-bottom:8px;">CAMPICK</div>
+      <div class="contact-phone">010-5858-1919</div>
+      <p>전화 · 카카오톡 문의 모두 가능합니다</p>
+    </div>
+
+    <a href="https://blog.naver.com/ckzksdl7" target="_blank" class="blog-link">
+      <div class="blog-link-left">
+        <strong>📋 시공 사례 보러가기</strong>
+        <p>네이버 블로그에서 실제 현장 기록 확인</p>
+      </div>
+      <div class="blog-link-arrow">→</div>
+    </a>
+
+  </div>
+</div>
+
+<script>
+function show(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (btn) btn.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function showProd(id, btn, group) {
+  const prefix = group === 'm' ? 'm-' : 's-';
+  document.querySelectorAll('[id^="' + prefix + '"]').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.parentElement.querySelectorAll('.prod-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
